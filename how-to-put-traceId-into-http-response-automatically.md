@@ -1,4 +1,6 @@
-# 将 TraceId 自动写入 HTTP Response Header
+# 将 TraceId 自动写入 HTTP Response Header (Java & NodeJs)
+
+# Java
 
 > 默认情况下，TraceId 只会在保存在 HTTP Requst Header 中，如果您需要在 HTTP Response Header 中设置 TraceId，可参考本教程，使用 OpenTelemetry Java Agent Extension(扩展)以增强 OpenTelemetry Java Agent 的功能。
 
@@ -99,4 +101,54 @@ java -javaagent:path/to/opentelemetry-javaagent.jar \
      -Dotel.exporter.otlp.endpoint=<endpoint> \
      -Dotel.metrics.exporter=none 
      -jar yourapp.jar
+```
+
+
+# NodeJS
+
+## 1. 下载 OpenTelemetry Node.js demo
+
+* demo地址：[node.js-demo](https://github.com/alibabacloud-observability/nodejs-demo)
+
+
+## 2. 修改 demo 中 HttpInstrumentation 的创建代码
+
+* 创建 HttpInstrumentation 时可以设置 HttpInstrumentationConfig 参数，参数包括 responseHook，该参数允许用户传入一个自定义方法的方法，在响应被处理之前添加自定义内容，例如在 HTTP Header 中添加 TraceId。
+
+
+```javascript
+...
+
+// 要被替换的内容
+// registerInstrumentations({
+//   tracerProvider: provider,
+//   instrumentations: [new HttpInstrumentation(), ExpressInstrumentation],
+// });
+
+
+
+
+const httpInstrumentation = new HttpInstrumentation({
+  // 添加一个自定义的responseHook
+  responseHook: (span, response) => {
+
+    // 从当前上下文中获取traceId, spanId
+    const traceId = span.spanContext().traceId;
+    const spanId = span.spanContext().spanId;
+
+    // 将traceId, spanId添加到响应标头中
+    response.setHeader('TraceId', traceId);
+    response.setHeader('SpanId', spanId);
+    // 返回响应对象
+    return response;
+  },
+});
+
+
+registerInstrumentations({
+  tracerProvider: provider,
+  instrumentations: [httpInstrumentation, ExpressInstrumentation],
+});
+
+...
 ```
