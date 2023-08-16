@@ -2,9 +2,15 @@
 
 > 默认情况下，TraceId 只会在保存在 HTTP Requst Header 中，如果您需要在 HTTP Response Header 中设置 TraceId，可参考本文方法，编写扩展程序以增强 OpenTelemetry Java Agent 的功能。
 
+本文提供了两种方法：
+
+* 方法一：开箱即用。直接使用我们已经打包好的 OpenTelemetry Java Agent 扩展，简单快捷。
+
+* 方法二：自行实现 OpenTelemetry Java Agent 扩展。如果我们的扩展不满足您的需求，可以参考此方法实现 OpenTelemetry Java Agent 扩展并打成 JAR 包。
+
 ## 1. 方法一：开箱即用
 
-* 我们已经实现了在简单的 OpenTelemetry Java Agent 扩展，在 HTTP Response Header 中自动添加“TraceId”和“SpanId”字段，如果该扩展满足您的需求，只需要在启动参数加载 JAR 包即可。
+* 我们已经实现了在简单的 OpenTelemetry Java Agent 扩展，在 HTTP Response Header 中自动添加“TraceId”和“SpanId”字段，只需要在启动参数加载 JAR 包即可。
    * 下载地址：[ot-java-agent-extension-1.28.0.jar]() 
 
 * 在原有启动参数上添加 otel.javaagent.extensions 参数
