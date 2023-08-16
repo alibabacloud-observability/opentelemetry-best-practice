@@ -1,6 +1,6 @@
 # 将 TraceId 自动写入 HTTP Response Header
 
-> 默认情况下，TraceId 只会在保存在 HTTP Requst Header 中，如果您需要在 HTTP Response Header 中设置 TraceId，可参考本文方法，编写扩展程序以增强 OpenTelemetry Java Agent 的功能。
+> 默认情况下，TraceId 只会在保存在 HTTP Requst Header 中，如果您需要在 HTTP Response Header 中设置 TraceId，可参考本文方法，使用 OpenTelemetry Java Agent Extension(扩展)以增强 OpenTelemetry Java Agent 的功能。
 
 本文提供了两种方法：
 
@@ -10,14 +10,12 @@
 
 ## 1. 方法一：开箱即用
 
-* 我们已经实现了在简单的 OpenTelemetry Java Agent 扩展，在 HTTP Response Header 中自动添加“TraceId”和“SpanId”字段，只需要在启动参数加载 JAR 包即可。
-   * 下载地址：[ot-java-agent-extension-1.28.0.jar](https://github.com/alibabacloud-observability/opentelemetry-best-practice/blob/main/opentelemetry-javaagent-extension/ot-java-agent-extension-1.28.0.jar) 
+* 我们已经实现了简单的 OpenTelemetry Java Agent 扩展，在 HTTP Response Header 中自动添加“TraceId”和“SpanId”字段，只需要在启动参数加载 JAR 包即可。下载地址：[ot-java-agent-extension-1.28.0.jar](https://github.com/alibabacloud-observability/opentelemetry-best-practice/blob/main/opentelemetry-javaagent-extension/ot-java-agent-extension-1.28.0.jar) 
 
-* 在原有启动参数上添加 otel.javaagent.extensions 参数
+* 使用方法：
+  * 在原有启动参数上添加 otel.javaagent.extensions 参数 `-Dotel.javaagent.extensions=/path/to/opentelemetry-java-agent-extension.jar`
 
-`-Dotel.javaagent.extensions=/path/to/opentelemetry-java-agent-extension.jar`
-
-* 例如
+  * 一个完整的启动命令示例：
 ```
 java -javaagent:path/to/opentelemetry-javaagent.jar \
      -Dotel.javaagent.extensions=path/to/opentelemetry-java-agent-extension.jar \
@@ -93,7 +91,7 @@ mvn clean pacakage
 
 `-Dotel.javaagent.extensions=/path/to/opentelemetry-java-agent-extension.jar`
 
-* 例如
+* 一个完整的启动命令示例：
 ```
 java -javaagent:path/to/opentelemetry-javaagent.jar \
      -Dotel.javaagent.extensions=path/to/opentelemetry-java-agent-extension.jar \
