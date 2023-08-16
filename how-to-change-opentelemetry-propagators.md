@@ -11,7 +11,7 @@
 |  tracecontext  |  traceparent : {version}-{trace-id}-{parent-id}-{trace-flags}  |  [https://www.w3.org/TR/trace-context/](https://www.w3.org/TR/trace-context/)   |
 |  baggage  | - |  [https://www.w3.org/TR/baggage/](https://www.w3.org/TR/baggage/)  |
 |  b3  |  b3: {TraceId}-{SpanId}-{SamplingState}-{ParentSpanId}  | [https://github.com/openzipkin/b3-propagation](https://github.com/openzipkin/b3-propagation) |
-|  b3multi  |  X-B3-TraceId: {TraceId} X-B3-SpanId: {SpanId} X-B3-ParentSpanId: {ParentSpanId} X-B3-Sampled: {SamplingState}  | [https://github.com/openzipkin/b3-propagation](https://github.com/openzipkin/b3-propagation) |
+|  b3multi  |  X-B3-TraceId: {TraceId}<br> X-B3-SpanId: {SpanId}<br> X-B3-ParentSpanId: {ParentSpanId}<br> X-B3-Sampled: {SamplingState}  | [https://github.com/openzipkin/b3-propagation](https://github.com/openzipkin/b3-propagation) |
 |  jaeger  |  uber-trace-id : {trace-id}:{span-id}:{parent-span-id}:{flags}  | [https://www.jaegertracing.io/docs/1.21/client-libraries/#propagation-format](https://www.jaegertracing.io/docs/1.21/client-libraries/#propagation-format)  |
 |  xray  | - |   |
 |  ottrace  | - |   |
