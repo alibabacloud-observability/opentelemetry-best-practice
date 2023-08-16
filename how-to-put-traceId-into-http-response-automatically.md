@@ -1,4 +1,4 @@
-# 将 TraceId 写入 HTTP Response Header
+# 将 TraceId 自动写入 HTTP Response Header
 
 > 默认情况下，TraceId 只会在保存在 HTTP Requst Header 中，如果您需要在 HTTP Response Header 中设置 TraceId，可参考本文方法，编写扩展程序以增强 OpenTelemetry Java Agent 的功能。
 
