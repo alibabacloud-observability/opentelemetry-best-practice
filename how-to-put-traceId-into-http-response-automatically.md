@@ -21,7 +21,7 @@ java -javaagent:path/to/opentelemetry-javaagent.jar \
      -jar your-app.jar
 ```
 
-## 方法二：自行实现 OpenTelemetry Java Agent 扩展
+## 2. 方法二：自行实现 OpenTelemetry Java Agent 扩展
 
 ### 1. 前提条件
 * 使用 OpenTelemetry Java Agent
