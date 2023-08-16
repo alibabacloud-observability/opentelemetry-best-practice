@@ -9,6 +9,7 @@
 ## 2. 编写 OpenTelemetry Java Agent 扩展
 
 1. pom.xml 中添加依赖
+* 注意：opentelemetry-javaagent 的版本需要与您使用的 OpenTelemetry Java Agent 版本一致
 ```xml
   <dependencies>
       <dependency>
