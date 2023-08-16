@@ -7,8 +7,9 @@
 * OpenTelemetry Java Agent 版本 >= 1.24.0
 
 ## 2. 编写 OpenTelemetry Java Agent 扩展
-
-1. pom.xml 中添加依赖
+1. 新建一个项目
+   
+2. 在 pom.xml 中添加依赖
 * 注意：opentelemetry-javaagent 的版本需要与您使用的 OpenTelemetry Java Agent 版本一致
 ```xml
   <dependencies>
@@ -27,7 +28,7 @@
   </dependencies>
 ```
 
-2. 新建 AgentHttpResponseCustomizer 类，实现 HttpServerResponseCustomizer 接口
+3. 新建 AgentHttpResponseCustomizer 类，实现 HttpServerResponseCustomizer 接口
 
 ```java
 package org.example;
@@ -54,7 +55,7 @@ public class AgentHttpResponseCustomizer implements HttpServerResponseCustomizer
 }
 ```
 
-## 3. 构建
+## 3. 构建 OpenTelemetry Java Agent 扩展
 * 将程序打包成 JAR 包，构建后存储在 target 目录下
 ```
 mvn clean pacakage
