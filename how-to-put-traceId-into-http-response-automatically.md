@@ -106,9 +106,11 @@ java -javaagent:path/to/opentelemetry-javaagent.jar \
 
 # NodeJS
 
-## 1. 下载 OpenTelemetry Node.js demo
+## 1. 下载 OpenTelemetry Node.js demo（可选）
 
 * demo地址：[node.js-demo](https://github.com/alibabacloud-observability/nodejs-demo)
+
+* 如果您的 NodeJS 应用已经使用 OpenTelemetry 接入，可跳过步骤1，直接参考步骤2修改 NodeJS 应用中的代码。
 
 
 ## 2. 修改 demo 中 HttpInstrumentation 的创建代码
