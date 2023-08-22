@@ -21,6 +21,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 *   注意：为保证依赖互相兼容，请将各项 opentelemetry 依赖设置为同一版本，且与您使用的 OpenTelemetry Java Agent 版本保持一致。
     
 
+```xml
     <dependency>
         <groupId>com.google.auto.service</groupId>
         <artifactId>auto-service</artifactId>
@@ -52,6 +53,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
         <artifactId>opentelemetry-semconv</artifactId>
         <version>1.28.0-alpha</version>
     </dependency>
+```
 
 #### 1.4 新建 SpanFilterSampler 类（类名可自定义）
 
@@ -60,7 +62,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 
 *   **shouldSample 方法**
     
-    *   可以在方法中自定义过滤条件。对于要过滤的 Span，返回 SamplingResult.create(SamplingDecision.DROP)，需要保留并继续上报的 Span 则返回 SamplingResult.create(SamplingDecision.RECORD\_AND\_SAMPLE)。
+    *   可以在方法中自定义过滤条件。对于要过滤的 Span，返回 `SamplingResult.create(SamplingDecision.DROP)`，需要保留并继续上报的 Span 则返回 `SamplingResult.create(SamplingDecision.RECORD_AND_SAMPLE)`。
         
 *   **getDescription 方法**
     
@@ -69,7 +71,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 
 *   在下面示例代码中，SpanFilterSampler 会过滤名称为“spanName1”或“spanName2”的Span，以及 attributes.http.target 为“/api/checkHealth”或“"/health/checks"”的所有 Span。
     
-
+```java
     package org.example;
     
     import io.opentelemetry.api.common.Attributes;
@@ -114,7 +116,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
             return "SpanFilterSampler"; // SpanFilterSampler可以替换为自定义的名称
         }
     }
-    
+```
 
 #### 1.5 新建 SpanFilterSamplerProvider 类（类名可自定义）
 
@@ -129,7 +131,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
     
     *   获取自定义的 Sampler 名称，OpenTelemetry Java Agent 通过该名称找到这个 Sampler。
         
-
+```java
     package org.example;
     
     import com.google.auto.service.AutoService;
@@ -149,27 +151,29 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
             return "SpanFilterSampler"; // SpanFilterSampler可以替换为自定义的名称
         }
     }
-    
+```  
 
 #### 1.6 构建
 
 *   将程序打包成 JAR 包，构建后存储在 target 目录下
     
-
-    mvn clean pacakage
+```
+mvn clean pacakage
+```
+    
 
 #### 1.7 启动应用时加载 OpenTelemetry Java Agent 扩展
 
 有两种加载方式：
 
 *   方法一：在原有 VM 参数上添加 otel.traces.sampler 参数
-    
-
+```  
     -Dotel.traces.sampler=<your-sampler-name> // 将 <your-sampler-name> 替换为您自定义的 Sampler 名称，也就是 getName 方法的返回值
+```
 
 *   完整启动命令示例：
     
-
+```
     java -javaagent:path/to/opentelemetry-javaagent.jar \
          -Dotel.javaagent.extensions=path/to/opentelemetry-java-agent-extension.jar \
          -Dotel.traces.sampler=<your-sampler-name> \ 
@@ -177,15 +181,16 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
          -Dotel.exporter.otlp.endpoint=<endpoint> \
          -Dotel.metrics.exporter=none 
          -jar yourapp.jar
+```
 
-*   方法一：设置 OTEL\_TRACES\_SAMPLER 环境变量
-    
-
+*   方法二：设置 OTEL\_TRACES\_SAMPLER 环境变量
+```
     export OTEL_TRACES_SAMPLER="<your-sampler-name>" // 将 <your-sampler-name> 替换为您自定义的 Sampler 名称，也就是 getName 方法的返回值
+```
 
 *   完整启动命令示例：
     
-
+```
     export OTEL_JAVAAGENT_EXTENSIONS="path/to/opentelemetry-java-agent-extension.jar"
     export OTEL_TRACES_SAMPLER="<your-sampler-name>"
     export OTEL_EXPORTER_OTLP_HEADERS="Authentication=<token>"
@@ -194,6 +199,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
     
     java -javaagent:path/to/opentelemetry-javaagent.jar \
          -jar yourapp.jar
+```
 
 ### 2. 方法二：使用 OpenTelemetry Java SDK （手动埋点）
 
@@ -209,7 +215,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 
 *   **shouldSample 方法**
     
-    *   可以在方法中自定义过滤条件。对于要过滤的 Span，返回 SamplingResult.create(SamplingDecision.DROP)，需要保留并继续上报的 Span 则返回 SamplingResult.create(SamplingDecision.RECORD\_AND\_SAMPLE)。
+    *   可以在方法中自定义过滤条件。对于要过滤的 Span，返回 `SamplingResult.create(SamplingDecision.DROP)`，需要保留并继续上报的 Span 则返回 `SamplingResult.create(SamplingDecision.RECORD_AND_SAMPLE)`。
         
 *   **getDescription 方法**
     
@@ -218,7 +224,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 
 *   在下面示例代码中，SpanFilterSampler 会过滤名称为“spanName1”或“spanName2”的Span，以及 attributes.http.target 为“/api/checkHealth”或“"/health/checks"”的所有 Span。
     
-
+```java
     package org.example;
     
     import io.opentelemetry.api.common.Attributes;
@@ -263,14 +269,14 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
             return "SpanFilterSampler"; // SpanFilterSampler可以替换为自定义的名称
         }
     }
-    
+```    
     
 
 #### 2.3 在创建 SdkTracerProvider 实例时设置自定义 Sampler
 
-*   在创建 SdkTracerProvider 实例时，调用 setSampler(new SpanFilterSampler())，即可完成配置。
+*   在创建 SdkTracerProvider 实例时，调用 `setSampler(new SpanFilterSampler())`，即可完成配置。
     
-
+```java
     ...
     
     
@@ -285,6 +291,8 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
     
     
     ...
+
+```
 
 #### 2.4   启动应用
 
@@ -303,7 +311,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
     
 *   下面代码中展示了如何过滤 request.url=/api/checkHeal 的请求：
     
-
+```javascript
     ...
     
     // 要被替换的内容
@@ -331,6 +339,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
     });
     
     ...
+```
 
 #### 1.2 启动应用
 
@@ -340,7 +349,7 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
 
 *   创建一个实现了Sampler接口的自定义Sampler类。该接口定义了是否采样的规则。例如：
     
-
+```javascript
     const opentelemetry = require('@opentelemetry/api');
     
     class SpanFilterSampler {
@@ -349,8 +358,11 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
       }
     }
 
+```
+
 #### 2.2 创建 NodeTracerProvider 实例时设置自定义 Sampler
 
+```javascript
     ...
     const provider = new NodeTracerProvider({
       sampler: new SpanFilterSampler(), // 添加这一行代码，设置自定义 Sampler
@@ -360,3 +372,4 @@ OpenTelemetry Samplers 可用来过滤 Span。如果不希望修改业务代�
       }),
     });
     ...
+```
